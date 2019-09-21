@@ -34,7 +34,7 @@ end:				; Jump forever (same as jmp end)
 
 here:				; C-like NULL terminated string
 
-	db 'Welcome to the most powerful x86 calculator. So powerful that it only does factorial :P', 0xd, 0xa, 0x0
+	db 'Welcome to the most powerful x86 calculator.', 0xd, 0xa, 0x0
 	
 	times 510 - ($-$$) db 0	; Pad with zeros
 	dw 0xaa55		; Boot signature
