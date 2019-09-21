@@ -38,14 +38,3 @@ here:				; C-like NULL terminated string
 	
 	times 510 - ($-$$) db 0	; Pad with zeros
 	dw 0xaa55		; Boot signature
-
-.DATA
-
-# Define the messages of our program
-input_lbl:       DB   "Number: ", 0 					
-bad_input_lbl:   DB   "Number must be positive!", 0
-result_lbl:      DB   "Total: ", 0
-
-# Will receive the user 'input' and show the 'result'
-input:    DD   0
-result:   DD   0
