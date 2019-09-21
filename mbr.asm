@@ -35,9 +35,26 @@ end:				; Jump forever (same as jmp end)
 	jmp $
 
 here:				; C-like NULL terminated string
-
-	db 'Welcome to the most powerful x86 calculator.'
 	
+	; Start messages
+
+	db "", 0xd, 0xa
+	db "================================================", 0xd, 0xa
+	db "Welcome to the most powerful x86 factorial calculator.", 0xd, 0xa
+	db "Please, read this before using the program: ", 0xd, 0xa
+	db "", 0xd, 0xa
+	db "1. Please, don't input negative numbers", 0xd, 0xa
+	db "2. Please, don't enter an invalid input such as letters etc", 0xd, 0xa
+	db "", 0xd, 0xa
+	db "We're not going to check neither of these issues. Enjoy!", 0xd, 0xa
+	db "================================================", 0xd, 0xa
+	db "", 0xd, 0xa
+	
+	;;;;;;;;;;;;;;;;;;;
+
+	; Start of our program
+	db "Please, enter a number to calculate its factorial: "
+
 	times 510 - ($-$$) db 0	; Complete with zeros
 	dw 0xaa55				; Boot signature
 
