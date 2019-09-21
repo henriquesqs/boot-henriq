@@ -24,7 +24,11 @@ all: $(MBR)
 # Test with x86 emulator
 
 test: $(MBR)
-	qemu-system-i386 -drive format=raw,file=$(MBR) -net none
+	# If you are using qemu for windows, use this command below
+	#qemu-system-i386w -drive format=raw,file=mbr.bin -net none 
+
+	# If you're using qemu for linux, use this command below
+	qemu-system-i386w -drive format=raw,file=mbr.bin -net none
 
 # Create bootable USB stick
 
