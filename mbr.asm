@@ -8,6 +8,14 @@
 
 	bits 16			; set 16-bit code mode
 
+	%define  SYS_EXIT   1
+	%define  SYS_READ   3
+	%define  SYS_WRITE  4
+	
+	%define  STDIN      0
+	%define  STDOUT     1
+	%define  STDERR     2
+
 	;; Ensure segment:offset values are ok after program is loaded 
  
 	xor ax, ax
@@ -36,7 +44,7 @@ end:				; Jump forever (same as jmp end)
 
 here:				; C-like NULL terminated string
 	
-	; Start messages
+	;; Start messages
 
 	db "", 0xd, 0xa
 	db "================================================", 0xd, 0xa
@@ -50,19 +58,24 @@ here:				; C-like NULL terminated string
 	db "================================================", 0xd, 0xa
 	db "", 0xd, 0xa
 	
-	;;;;;;;;;;;;;;;;;;;
+	;; Start of our program
 
-	; Start of our program
 	db "Please, enter a number to calculate its factorial: "
 
-	times 510 - ($-$$) db 0	; Complete with zeros
-	dw 0xaa55				; Boot signature
+	; mov ah, 13h    ; function number = 13h : Write String
+	; mov al, welcome_msg     ; AL = code of string to display
+	; int 10h        ; call INT 10h, BIOS video service
 
-	call quit
+	times 510 - ($-$$) db 0		; Complete with zeros
+	dw 0xaa55					; Boot signature
 
-; Exit program and restore resources
-quit:
-    mov     bx, 0
-    mov     ax, 1
-    int     80h
-    ret
+	welcome_msg: db "workssssssss", 0xd, 0xa
+	
+; 	call quit
+
+; ; Exit program and restore resources
+; quit:
+;     mov     bx, 0
+;     mov     ax, 1
+;     int     80h
+;     ret
