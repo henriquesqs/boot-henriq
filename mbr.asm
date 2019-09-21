@@ -6,6 +6,7 @@
 
 	org 0x7c00		; Our load address
 
+	bits 16
 	
 	;; Ensure segment:offset values are ok after program is loaded 
  
@@ -37,4 +38,4 @@ here:				; C-like NULL terminated string
 	db 'Welcome to the most powerful x86 calculator.', 0xd, 0xa, 0x0
 	
 	times 510 - ($-$$) db 0	; Pad with zeros
-	dw 0xaa55		; Boot signature
+	dw 0xaa55				; Boot signature
