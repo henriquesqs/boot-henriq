@@ -36,7 +36,16 @@ end:				; Jump forever (same as jmp end)
 
 here:				; C-like NULL terminated string
 
-	db 'Welcome to the most powerful x86 calculator.', 0xd, 0xa, 0x0
+	db 'Welcome to the most powerful x86 calculator.'
 	
 	times 510 - ($-$$) db 0	; Complete with zeros
 	dw 0xaa55				; Boot signature
+
+	call quit
+
+; Exit program and restore resources
+quit:
+    mov     bx, 0
+    mov     ax, 1
+    int     80h
+    ret
