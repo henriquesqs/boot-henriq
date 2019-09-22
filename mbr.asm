@@ -27,7 +27,7 @@
 	welcome_msg:		db "Welcome to our x86 factorial calculator.", 0xd, 0xa, 0x0	
 	input_msg:			db "Please, input a number: "
 	result_msg:			db "The result is: "
-	blank: 				db "", 0xd, 0xa
+	blank:				db "", 0xd, 0xa
 
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -50,4 +50,4 @@
 		ret
 
 	times 510 - ($-$$) db 0			; Complete with zeros
-	dw 0xaa55						; Boot signature
+	dw 0xaa55			; Boot signature
