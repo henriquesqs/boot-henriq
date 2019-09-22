@@ -53,10 +53,8 @@ printString:
 	mov bh, 0x00
 
 	.loop:
-
-		mov al, si
-		add si, 1
-		; lodsb ; Load a byte from SI into AL and then increase SI.
+		
+		lodsb ; Load a byte from SI into AL and then increase SI.
 
 		cmp al, 0x00 ; checkes wheter AL contains a null-terminating char and stop print
 		je .done
