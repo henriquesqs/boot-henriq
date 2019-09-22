@@ -50,4 +50,4 @@
 		ret
 
 	times 510 - ($-$$) db 0			; Complete with zeros
-	dw 0xaa55			; Boot signature
+	dw 0xaa55				; Boot signature
