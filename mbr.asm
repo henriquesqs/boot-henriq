@@ -25,29 +25,49 @@
 	;;;;; Define messages and variables of our program ;;;;;;;
 
 	welcome_msg:			db "Welcome to our x86 factorial calculator.", 0xd, 0xa, 0x0	
-	input_msg:			db "Please, input a number: "
-	result_msg:			db "The result is: "
-	blank:				db "", 0xd, 0xa
+	input_msg:			db "Please, input a number: ", 0x0 
+	result_msg:			db "The result is: ", 0xd, 0xa, 0x0 
+	blank:				db 0xa
 
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 	main:
 
-		mov bx, welcome_msg
-		call printString
+	mov si, blank			; load blank into SI
+	call printString		; calls sub routine printString
 
-		call readInput
+	mov si, welcome_msg		; load welcome_msg into SI
+	call printString		; calls sub routine printString
 
-		call factorial
+	mov si, input_msg		; load input_msg into SI
+	call printString		; calls sub routine printString
 
-	readInput:
-		ret
+	ret
 
-	printString:
-		ret
+; #######################################
+; ##           PRINT STRING            ##
+; #######################################
+printString:
 
-	factorial:
-		ret
+	mov ah, 0x0E ; Display character
+	mov bh, 0x00
+
+	.loop:
+
+		mov al, si
+		add si, 1
+		; lodsb ; Load a byte from SI into AL and then increase SI.
+
+		cmp al, 0x00 ; checkes wheter AL contains a null-terminating char and stop print
+		je .done
+
+		int 10h
+
+		jmp .loop
+
+	.done:
+		ret ; Return control to the caller.
+
 
 	times 510 - ($-$$) db 0			; Complete with zeros
 	dw 0xaa55				; Boot signature
