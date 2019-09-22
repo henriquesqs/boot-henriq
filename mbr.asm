@@ -52,6 +52,7 @@
 ; #######################################
 ; ##           PRINT STRING            ##
 ; #######################################
+	
 	printString:
 
 		mov ah, 14 				; Display character code
@@ -74,7 +75,8 @@
 ; #######################################
 ; ##            READ INPUT             ##
 ; #######################################
-; 	readInput:
+	
+	; readInput:
 
 
 	times 510 - ($-$$) db 0			; Complete with zeros
