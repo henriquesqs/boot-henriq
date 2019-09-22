@@ -44,17 +44,23 @@ end:				; Jump forever (same as jmp end)
 
 here:				; C-like NULL terminated string
 	
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	; welcome_msg 			db "Welcome to the most powerful x86 factorial calculator.", 0xd, 0xa	
+	; welcome_msg_len		equ $ - welcome_msg
+
+	; input_msg				db "Please, input a number: "
+	; input_msg_len 		equ $ - input_msg
+
+	; result_msg			db "The result is: "
+	; result_msg_len		equ $ - result_msg
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
 	;; Start messages
 
 	db "", 0xd, 0xa
 	db "================================================", 0xd, 0xa
-	db "Welcome to the most powerful x86 factorial calculator.", 0xd, 0xa
-	db "Please, read this before using the program: ", 0xd, 0xa
-	db "", 0xd, 0xa
-	db "1. Please, don't input negative numbers", 0xd, 0xa
-	db "2. Please, don't enter an invalid input such as letters etc", 0xd, 0xa
-	db "", 0xd, 0xa
-	db "We're not going to check neither of these issues. Enjoy!", 0xd, 0xa
+	db "Welcome to our x86 factorial calculator.", 0xd, 0xa
+	db "Please, don't try to test this calculator (it certainly will fail). Enjoy!", 0xd, 0xa
 	db "================================================", 0xd, 0xa
 	db "", 0xd, 0xa
 	
@@ -62,15 +68,35 @@ here:				; C-like NULL terminated string
 
 	db "Please, enter a number to calculate its factorial: "
 
-	; mov ah, 13h    ; function number = 13h : Write String
-	; mov al, welcome_msg     ; AL = code of string to display
-	; int 10h        ; call INT 10h, BIOS video service
+	; mov	edx,result_msg_len    		; message length
+	; mov	ecx,result_msg	    		; message to write
+	; mov	ebx,STDOUT		       		; file descriptor (stdout)
+	; mov	eax,SYS_WRITE     	  		; system call number (sys_write)
+	; int	0x80        				; call kernel
 
-	times 510 - ($-$$) db 0		; Complete with zeros
-	dw 0xaa55					; Boot signature
+	times 510 - ($-$$) db 0			; Complete with zeros
+	dw 0xaa55						; Boot signature
 
-	welcome_msg: db "workssssssss", 0xd, 0xa
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ; 	call quit
 
 ; ; Exit program and restore resources
