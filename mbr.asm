@@ -22,7 +22,7 @@
 	jmp main
 
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	;;;;; Define messages and variables of our program ;;;;;
+	;;;;; Define messages and variables of our program ;;;;;;;
 
 	welcome_msg:		db "Welcome to our x86 factorial calculator.", 0xd, 0xa, 0x0	
 	input_msg:			db "Please, input a number: "
