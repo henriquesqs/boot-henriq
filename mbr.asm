@@ -21,50 +21,60 @@
 
 	jmp main
 
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	;;;;; Define messages and variables of our program ;;;;;;;
+; #######################################
+; ##       STRINGS AND VARIABLES       ##
+; #######################################
 
 	welcome_msg:			db "Welcome to our x86 factorial calculator.", 0xd, 0xa, 0x0	
 	input_msg:			db "Please, input a number: ", 0x0 
 	result_msg:			db "The result is: ", 0xd, 0xa, 0x0 
 	blank:				db 0xa
 
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; #######################################
+; ##              START                ##
+; #######################################
 
 	main:
 
-	mov si, blank			; load blank into SI
-	call printString		; calls sub routine printString
+		mov si, blank			; load blank into SI
+		call printString		; calls sub routine printString
 
-	mov si, welcome_msg		; load welcome_msg into SI
-	call printString		; calls sub routine printString
+		mov si, welcome_msg		; load welcome_msg into SI
+		call printString		; calls sub routine printString
 
-	mov si, input_msg		; load input_msg into SI
-	call printString		; calls sub routine printString
+		mov si, input_msg		; load input_msg into SI
+		call printString		; calls sub routine printString
 
-	ret
+		; call readInput		; calls sub routine readInput
+
+		ret
 
 ; #######################################
 ; ##           PRINT STRING            ##
 ; #######################################
-printString:
+	printString:
 
-	mov ah, 14 ; Display character
-	mov bh, 0
+		mov ah, 14 				; Display character code
+		mov bh, STDIN
 
-	.loop:
-		
-		lodsb ; Load a byte from SI into AL and then increase SI.
+		.loop:
+			
+			lodsb 				; Load a byte from SI into AL and then increase SI.
 
-		cmp al, 0 ; checkes wheter AL contains a null-terminating char and stop print
-		je .done
+			cmp al, 0 			; checkes wheter AL contains a null-terminating char and stop print
+			je .done
 
-		int 10h
+			int 10h 			; call int 10h, BIOS video service
 
-		jmp .loop
+			jmp .loop
 
-	.done:
-		ret ; Return control to the caller.
+		.done:
+			ret ;				 Return control to the caller.
+
+; #######################################
+; ##            READ INPUT             ##
+; #######################################
+; 	readInput:
 
 
 	times 510 - ($-$$) db 0			; Complete with zeros
