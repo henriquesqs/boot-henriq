@@ -49,14 +49,14 @@
 ; #######################################
 printString:
 
-	mov ah, 0x0E ; Display character
-	mov bh, 0x00
+	mov ah, 14 ; Display character
+	mov bh, 0
 
 	.loop:
 		
 		lodsb ; Load a byte from SI into AL and then increase SI.
 
-		cmp al, 0x00 ; checkes wheter AL contains a null-terminating char and stop print
+		cmp al, 0 ; checkes wheter AL contains a null-terminating char and stop print
 		je .done
 
 		int 10h
