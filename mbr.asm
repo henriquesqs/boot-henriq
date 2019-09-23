@@ -101,7 +101,8 @@
 			jne .loop
 
 
-		printLido:
+		.printLido:
+
 			dec cx
 			pop ax 
 
@@ -109,18 +110,7 @@
 			int 0x10
 			
 			cmp cx, 0x00
-			jne printLido
-
-
-
-		; mov ah, 0
-		; int 16h
-
-		; mov dx, 4
-		; mov cx, num
-		; mov bx, STDIN
-		; mov ax, SYS_READ
-		; int 80h
+			jne .printLido
 
 		pop dx
 		pop cx
