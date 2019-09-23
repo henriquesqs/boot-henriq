@@ -30,7 +30,6 @@
 	readNumber_msg:		db "Ok, we're going to calculte the factorial of ", 0x0
 	result_msg:			db "The result is: ", 0xd, 0xa, 0x0 
 	blank:				db 0xa
-	num       			resd 1
 
 ; #######################################
 ; ##              START                ##
