@@ -48,8 +48,8 @@
 
 		call readInput			; calls sub routine readInput
 
-		mov ah, 14				; Display character code
-		int 10h					; Call int 10h, BIOS video service
+		mov ah, 14			; Display character code
+		int 10h				; Call int 10h, BIOS video service
 		
 		; call factorial
 
@@ -90,6 +90,7 @@
 		push dx
 
 		.loop:
+			
 			mov ah, 0x00
 			int 0x16
 
