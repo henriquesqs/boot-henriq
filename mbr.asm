@@ -1,3 +1,9 @@
+	;; Copyright (c) 2019 - Henrique de S. Q. dos Santos <henriquesqs@usp.br>, Victor M. Gonzaga <machado.prx@usp.br>
+	;;
+	;; This is free software and distributed under GNU GPL vr.3. Please 
+	;; refer to the companion file LICENSING or to the online documentation
+	;; at https://www.gnu.org/licenses/gpl-3.0.txt for further information.
+
 	[org 0x7c00]		; Our load address
 
 	[bits 16]			; set 16-bit code mode
