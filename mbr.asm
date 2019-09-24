@@ -6,7 +6,7 @@
 
 	[org 0x7c00]		; Our load address
 
-	[bits 16]			; set 16-bit code mode
+	[bits 16]		; set 16-bit code mode
 
 	xor ax, ax
 	mov ds, ax
@@ -24,9 +24,6 @@
 ; #######################################
 
 	welcome_msg:			db "Welcome to our program. Hit 'enter' or 'space' and see what happens.", 0xd, 0xa, 0x0	
-	input_msg:			db "Please, input a number: ", 0x0 
-	readNumber_msg:		db "Ok, we're going to calculte the factorial of ", 0x0
-	result_msg:			db "The result is: ", 0xd, 0xa, 0x0 
 	blank:				db 0xa, 0x0
 
 ; #######################################
@@ -41,20 +38,16 @@
 		mov si, welcome_msg		; Load welcome_msg into SI
 		call printString		; Calls sub routine printString
 
-		mov ah, 00h				; read hitted button
+		mov ah, 00h			; Read hitted button
 		int 16h
 
-		cmp al, 0xD				; checks if user hitted 'enter'
-		je clearScreen1			; jump to clearScreen1 if true
+		cmp al, 0xD			; Checks if user hitted 'enter'
+		je clearScreen1			; Jump to clearScreen1 if true
 
-		; add al, 0xD				; adds the subtracted value
-		cmp al, 20d			; checks if user hitted 'space'
-		je clearScreen2			; jump to clearScreen2 if true
+		cmp al, 0x20			; checks if user hitted 'space'
+		je clearScreen2			; Jump to clearScreen2 if true
 
-		jmp end					; if user hitted something else, end program
-
-		; mov ah, 06h				; Clear screen up
-		; int 10h
+		jmp end				; If user hitted something else, end program
 
 		jmp main
 
@@ -64,7 +57,7 @@
 	
 	printString:	
 
-		mov ah, 14		; int 10h 'print char' function
+		mov ah, 14			; int 10h 'print char' function
 
 		.loop:
 
@@ -94,7 +87,14 @@
 		mov al, 0x20 ; blank char
 		mov ah, 0x9
 		int 0x10
-		ret
+
+		mov ah, 00h
+		mov al, 00h
+		mov cx, 00h
+		mov dx, 00h
+		mov bh, 00h
+
+		jmp main
 
 ; #######################################
 ; ##           PRINT SCREEN2           ##
@@ -108,7 +108,14 @@
 		mov dx, 184FH  ; lower right corner DH=row, DL=column 
 		mov bh, 1Eh    ; YellowOnBlue
 		int 10H
-		ret
+
+		mov ah, 00h
+		mov al, 00h
+		mov cx, 00h
+		mov dx, 00h
+		mov bh, 00h
+
+		jmp main
 
 	end:
 
