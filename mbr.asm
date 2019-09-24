@@ -24,8 +24,8 @@
 ; #######################################
 
 	welcome_msg:			db "Welcome to our program. Hit 'enter' or 'space' and see what happens.", 0xd, 0xa, 0x0
-	welcome_msg2:			db "If you hit something else, nothing will occur.", 0xd, 0xa, 0x0
-	welcome_msg3:			db "To stop the program, hit 'escape' and close the window. ", 0xd, 0xa, 0x0	
+	welcome_msg2:			db "To stop the program, hit 'escape' and close the window. ", 0xd, 0xa, 0x0	
+	welcome_msg3:			db "If you hit something else, nothing will occur.", 0xd, 0xa, 0x0
 	blank:				db 0xa, 0x0
 
 ; #######################################
@@ -40,10 +40,10 @@
 		mov si, welcome_msg		; Load welcome_msg into SI
 		call printString		; Calls sub routine printString
 
-		mov si, welcome_msg2	; Load welcome_msg into SI
+		mov si, welcome_msg2		; Load welcome_msg2 into SI
 		call printString		; Calls sub routine printString
 
-		mov si, welcome_msg3	; Load welcome_msg into SI
+		mov si, welcome_msg3		; Load welcome_msg3 into SI
 		call printString		; Calls sub routine printString
 
 		mov ah, 00h			; Read hitted button
@@ -56,7 +56,7 @@
 		je clearScreen2			; Jump to clearScreen2 if true
 
 		cmp al, 0x1B			; checks if user hitted 'escape'
-		je end			; Jump to end if true
+		je end				; Jump to end if true
 
 		jmp main
 
