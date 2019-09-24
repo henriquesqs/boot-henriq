@@ -81,19 +81,19 @@
 			ret
 
 ; #######################################
-; ##           PRINT SCREEN1           ##
+; ##           CLEAR SCREEN1           ##
 ; #######################################
 
 	clearScreen1:
 
-		mov dx, 0 ; Set cursor to top left-most corner of screen
+		mov dx, 0 			; Set cursor to top left-most corner of screen
 		mov bh, 0
 		mov ah, 0x2
 		int 0x10
-		mov cx, 2000 ; print 2000 chars
+		mov cx, 2000 			; Prints 2000 chars
 		mov bh, 0
-		mov bl, 0x21 ; green bg/blue fg
-		mov al, 0x20 ; blank char
+		mov bl, 0x21 			; Green background/blue foreground
+		mov al, 0x20 			; Blank char
 		mov ah, 0x9
 		int 0x10
 
@@ -106,17 +106,17 @@
 		jmp main
 
 ; #######################################
-; ##           PRINT SCREEN2           ##
+; ##           CLEAR SCREEN2           ##
 ; #######################################
 
 	clearScreen2:
 
-		mov AH, 06h    ; Scroll up function
-		xor al, al     ; Clear entire screen
-		xor cx, cx     ; Upper left corner CH=row, CL=column
-		mov dx, 184FH  ; lower right corner DH=row, DL=column 
-		mov bh, 1Eh    ; YellowOnBlue
-		int 10H
+		mov ah, 06h    			; Scroll up function
+		xor al, al     			; Clear entire screen
+		xor cx, cx     
+		mov dx, 184FH   
+		mov bh, 1Eh    			; YellowOnBlue
+		int 10h
 
 		mov ah, 00h
 		mov al, 00h
