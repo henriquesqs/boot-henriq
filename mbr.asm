@@ -2,14 +2,6 @@
 
 	[bits 16]			; set 16-bit code mode
 
-	%define  SYS_EXIT   1
-	%define  SYS_READ   3
-	%define  SYS_WRITE  4
-	
-	%define  STDIN      0
-	%define  STDOUT     1
-	%define  STDERR     2
-
 	xor ax, ax
 	mov ds, ax
 	mov es, ax
@@ -25,107 +17,94 @@
 ; ##       STRINGS AND VARIABLES       ##
 ; #######################################
 
-	welcome_msg:			db "Welcome to our x86 factorial calculator.", 0xd, 0xa, 0x0	
+	welcome_msg:			db "Welcome to our program. Hit 'enter' or 'space' and see what happens.", 0xd, 0xa, 0x0	
 	input_msg:			db "Please, input a number: ", 0x0 
 	readNumber_msg:		db "Ok, we're going to calculte the factorial of ", 0x0
 	result_msg:			db "The result is: ", 0xd, 0xa, 0x0 
-	blank:				db 0xa
+	blank:				db 0xa, 0x0
 
 ; #######################################
 ; ##              START                ##
 ; #######################################
 
 	main:
-
-		mov si, blank			; load blank into SI
-		call printString		; calls sub routine printString
-
-		mov si, welcome_msg		; load welcome_msg into SI
-		call printString		; calls sub routine printString
-
-		mov si, input_msg		; load input_msg into SI
-		call printString		; calls sub routine printString
-
-		call readInput			; calls sub routine readInput
-
-		mov ah, 14			; Display character code
-		int 10h				; Call int 10h, BIOS video service
 		
-		; call factorial
+		mov si, blank			; Load blank into SI
+		call printString		; Calls sub routine printString
 
-		ret
+		mov si, welcome_msg		; Load welcome_msg into SI
+		call printString		; Calls sub routine printString
 
+		mov ah, 00h				; read hitted button
+		int 16h
+
+		cmp al, 0xD				; checks if user hitted 'enter'
+		je clearScreen1			; jump to clearScreen1 if true
+
+		; add al, 0xD				; adds the subtracted value
+		cmp al, 20d			; checks if user hitted 'space'
+		je clearScreen2			; jump to clearScreen2 if true
+
+		jmp end					; if user hitted something else, end program
+
+		; mov ah, 06h				; Clear screen up
+		; int 10h
+
+		jmp main
 
 ; #######################################
 ; ##           PRINT STRING            ##
 ; #######################################
 	
-	printString:
+	printString:	
 
-		mov ah, 14 				; Display character code
+		mov ah, 14		; int 10h 'print char' function
 
 		.loop:
-			
-			lodsb 				; Load a byte from SI into AL and then increase SI.
 
-			cmp al, 0 			; Checkes wheter AL contains a null-terminating char and stop print
-			je .done
-
-			int 10h 			; Call int 10h, BIOS video service
-
+			lodsb			; Load a byte from string in SI into AL and then increase SI.
+			cmp al, 0		; Checkes wheter AL contains a null-terminating char
+			je .done		; If char is zero, end of string
+			int 10h			; Otherwise, calls int 10h (BIOS video service) and print it
 			jmp .loop
 
 		.done:
-			ret ;				 Return control to the caller.
+
+			ret
 
 ; #######################################
-; ##            READ INPUT             ##
+; ##           PRINT SCREEN1           ##
 ; #######################################
-	
-	readInput:
 
-		push ax
-		push bx
-		push cx
-		push dx
+	clearScreen1:
 
-		.loop:
-			
-			mov ah, 0x00
-			int 0x16
-
-			push ax
-			inc cx
-
-			cmp al, 0x0d
-			jne .loop
-
-
-		.printLido:
-
-			dec cx
-			pop ax 
-
-			mov ah, 0x0e
-			int 0x10
-			
-			cmp cx, 0x00
-			jne .printLido
-
-		pop dx
-		pop cx
-		pop bx
-		pop ax
-
+		mov dx, 0 ; Set cursor to top left-most corner of screen
+		mov bh, 0
+		mov ah, 0x2
+		int 0x10
+		mov cx, 2000 ; print 2000 chars
+		mov bh, 0
+		mov bl, 0x21 ; green bg/blue fg
+		mov al, 0x20 ; blank char
+		mov ah, 0x9
+		int 0x10
 		ret
 
 ; #######################################
-; ##            FACTORIAL              ##
+; ##           PRINT SCREEN2           ##
 ; #######################################
-	
-	factorial:
 
-	factorial_loop:
-		
+	clearScreen2:
+
+		mov AH, 06h    ; Scroll up function
+		xor al, al     ; Clear entire screen
+		xor cx, cx     ; Upper left corner CH=row, CL=column
+		mov dx, 184FH  ; lower right corner DH=row, DL=column 
+		mov bh, 1Eh    ; YellowOnBlue
+		int 10H
+		ret
+
+	end:
+
 	times 510 - ($-$$) db 0			; Complete with zeros
 	dw 0xaa55				; Boot signature
